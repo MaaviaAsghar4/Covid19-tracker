@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Grid, Card, CardContent, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -10,46 +10,12 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function StatusBar({country}) {
-    console.log(country)
-    let [globalData, setGlobalData] = useState({});
-    let url = 'https://covid19.mathdro.id/api';
-    useEffect(() => {
-    let changeableURl = url;
-    if(country !== ""){
-        changeableURl = `${url}/countries/${country}`;
-    console.log(changeableURl)
-    }
-    
-        async function fetchGlobalApi() {
-            const response = await fetch(changeableURl);;
-            let fetchedData = await response.json();
-            setGlobalData({
-                confirmed: fetchedData.confirmed,
-                recovered: fetchedData.recovered,
-                deaths: fetchedData.deaths,
-                lastUpdate: fetchedData.lastUpdate,
-            });
-        }
-        fetchGlobalApi();
-    }, [])
-
-    // useEffect(()=>{
-    //     async function fetchGlobalApi() {
-    //         const fetchedGlobalData = await fetchGlobalData();
-    //         setGlobalData({
-    //             confirmed: fetchedGlobalData.confirmed.value,
-    //             recovered: fetchedGlobalData.recovered.value,
-    //             deaths: fetchedGlobalData.deaths.value,
-    //             lastUpdate: fetchedGlobalData.lastUpdate,
-    //         });
-    //     }
-    //     fetchGlobalApi()
-    // }, [])
+export default function StatusBar({data}) {
 
     const classes = useStyles();
 
-    if (!globalData.confirmed) {
+
+    if (!data.confirmed) {
         return 'Loading...'
     }
 
@@ -60,9 +26,9 @@ export default function StatusBar({country}) {
                     <Card elevation={3}>
                         <CardContent>
                             <Typography>Total Cases</Typography>
-                            <Typography>{globalData.confirmed.value}</Typography>
+                            <Typography>{data.confirmed}</Typography>
                             <Typography>Last Updated</Typography>
-                            <Typography>{new Date(globalData.lastUpdate).toDateString()}</Typography>
+                            <Typography>{new Date(data.lastUpdate).toDateString()}</Typography>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -70,9 +36,9 @@ export default function StatusBar({country}) {
                     <Card elevation={3}>
                         <CardContent>
                             <Typography>Total Recovered</Typography>
-                            <Typography>{globalData.recovered.value}</Typography>
+                            <Typography>{data.recovered}</Typography>
                             <Typography>Last Updated</Typography>
-                            <Typography>{new Date(globalData.lastUpdate).toDateString()}</Typography>
+                            <Typography>{new Date(data.lastUpdate).toDateString()}</Typography>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -80,9 +46,9 @@ export default function StatusBar({country}) {
                     <Card elevation={3}>
                         <CardContent>
                             <Typography>Total Deaths</Typography>
-                            <Typography>{globalData.deaths.value}</Typography>
+                            <Typography>{data.deaths}</Typography>
                             <Typography>Last Updated</Typography>
-                            <Typography>{new Date(globalData.lastUpdate).toDateString()}</Typography>
+                            <Typography>{new Date(data.lastUpdate).toDateString()}</Typography>
                         </CardContent>
                     </Card>
                 </Grid>

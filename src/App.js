@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from './Components/Header';
-import CountrySelecter from './Components/CountrySelecter';
+import MainContent from './Components/MainContent';
 import './App.css';
 
 function App() {
   return (
     <div>
       <Header />
-      <CountrySelecter />
+      <MainContent />
     </div>
   );
 }

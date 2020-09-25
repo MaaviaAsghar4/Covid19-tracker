@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { FormControl, NativeSelect } from '@material-ui/core';
 import { fetchAllCountries } from './Api';
-import StatusBar from './StatusBar'
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -14,31 +13,19 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function CountrySelecter() {
+export default function CountrySelecter({countryChange}) {
     const classes = useStyles();
 
     let [countries, setCountries] = useState([]);
-    let [country, setCountry] = useState('');
-
-    useEffect(()=>{
-        async function fetchCountriesApi(){
-            const response = await fetch('https://covid19.mathdro.id/api/countries');
-            let fetchCountries = await response.json();
-            setCountries(fetchCountries.countries);
-        };
-
+    useEffect(() => {
+        async function fetchCountriesApi() {
+            const fetchCountry = await fetchAllCountries();
+            setCountries(fetchCountry.countries)
+        }
         fetchCountriesApi();
-    }, []);
+    }, [])
 
-    // useEffect(() => {
-    //     async function fetchCountriesApi() {
-    //         const fetchCountry = await fetchAllCountries();
-    //         setCountries(fetchCountry.countries)
-    //     }
-    //     fetchCountriesApi();
-    // }, [])
-
-    function getCountry(e) { setCountry(e.target.value) }
+    function getCountry(e) { countryChange(e.target.value) }
 
     return (
         <div>
@@ -52,7 +39,6 @@ export default function CountrySelecter() {
                     })}
                 </NativeSelect>
             </FormControl>
-            <StatusBar country={country}/>
         </div>
     )
 }
