@@ -4,16 +4,16 @@ export const fetchGlobalData = async (country) => {
     try {
 
         let changeableURL = url;
-        
-        if(country) {
+
+        if (country) {
             changeableURL = `${url}/countries/${country}`
         }
-    
+
         const response = await fetch(changeableURL);
         let fetchedData = await response.json();
         return fetchedData;
     } catch (error) {
-        return error;
+        console.log(error);
     }
 }
 
@@ -24,6 +24,16 @@ export const fetchAllCountries = async () => {
         let fetchCountry = await response.json();
         return fetchCountry;
     } catch (error) {
-        return error;
+        console.log(error);
+    }
+}
+
+export const fetchDailyData = async () => {
+    try {
+        const response = await fetch(`${url}/daily`);
+        const fetcedCurrentData = await response.json();
+        return fetcedCurrentData;
+    } catch (error) {
+        console.log(error);
     }
 }

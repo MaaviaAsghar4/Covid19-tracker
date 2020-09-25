@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import CountrySelecter from './CountrySelecter';
 import StatusBar from './StatusBar';
-import { fetchGlobalData } from './Api'
+import Chart from './LineChart';
+import { fetchGlobalData } from './Api';
 
 
 export default function MainContent() {
@@ -37,6 +38,7 @@ export default function MainContent() {
         <div>
             <CountrySelecter countryChange={countryChange} />
             <StatusBar data={globalData}/>
+            <Chart data={globalData}/>
         </div>
     );
 }
